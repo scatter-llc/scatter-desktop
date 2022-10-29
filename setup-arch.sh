@@ -87,7 +87,7 @@ chsh -s /usr/bin/fish
 # TODO: browser picker
 
 yay -S --noconfirm \
-	ungoogled-chromium \
+	ungoogled-chromium-bin \
 	sublime-text-4
 
 # TODO: text editor picker
