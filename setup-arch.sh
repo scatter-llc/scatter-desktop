@@ -37,7 +37,7 @@ sudo pacman -Syu --noconfirm
 
 cp ./backgrounds/bg.jpg ~/.config/bg.jpg
 
-# Basic packages and dependencies for compiling btop and i3-gaps
+# Basic utilities; Xorg; i3-gaps
 
 sudo pacman -S --noconfirm \
 	btop \
@@ -133,7 +133,5 @@ sudo systemctl enable docker.service
 sudo systemctl enable x11vnc.service
 
 # Done!
-
-cd ..
 
 cowsay -b "Scatter Desktop is now installed. Reboot your system to activate"
