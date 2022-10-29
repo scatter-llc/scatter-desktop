@@ -160,6 +160,9 @@ gaps right 15
 gaps bottom 40
 gaps left 15
 
+# Resolution
+exec xrandr -s 1920x1080
+
 # Desktop Background
 exec feh --bg-scale ~/.config/bg.jpg
 

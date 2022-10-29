@@ -54,6 +54,8 @@ sudo pacman -S --noconfirm \
 	xorg \
 	i3-gaps
 
+echo "exec i3" > ~/.xinitrc
+
 # TODO: terminal font picker
 
 sudo pacman -S --noconfirm \
@@ -71,7 +73,8 @@ sudo pacman -S --noconfirm \
 	youtube-dl \
 	fish \
 	docker \
-	docker-compose
+	docker-compose \
+	ttf-jetbrains-mono
 
 # Fish shell
 
@@ -84,8 +87,8 @@ chsh -s /usr/bin/fish
 # TODO: browser picker
 
 yay -S --noconfirm \
-	sublime-text-4 \
-	nerd-fonts-complete
+	ungoogled-chromium \
+	sublime-text-4
 
 # TODO: text editor picker
 
@@ -124,11 +127,12 @@ sudo cp ./fonts/* /usr/share/fonts
 # Permissions
 
 chmod +x ~/.config/polybar/launch.sh
+chmod +x ~/.xinitrc
 
 # Enabling services
 
 sudo systemctl enable ly.service
-sudo systemctl enable docker
+sudo systemctl enable docker.service
 
 # Done!
 
