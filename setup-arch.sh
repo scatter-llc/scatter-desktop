@@ -5,8 +5,6 @@
 # You need to install `sudo` and `yay` before running this script and to run
 # this script from a sudoer account (NOT root).
 
-#URL_TOUCHPAD="https://gist.githubusercontent.com/harej/2b498b3999a1a2a8b481e994bcb8a686/raw/2a926e1fd5eecbe96e90836b827fbbf149bec4fc/30-touchpad.conf"
-
 # TODO: check if script is being run as root
 
 # TODO: check if sudo is installed
@@ -19,6 +17,7 @@ mkdir -p ~/.config/kitty
 mkdir -p ~/.config/picom
 mkdir -p ~/.config/polybar
 mkdir -p ~/.config/rofi
+mkdir -p ~/.vnc
 
 cp ./dotfiles/btop/* ~/.config/btop
 cp ./dotfiles/fish/* ~/.config/fish
@@ -41,40 +40,41 @@ cp ./backgrounds/bg.jpg ~/.config/bg.jpg
 # Basic packages and dependencies for compiling btop and i3-gaps
 
 sudo pacman -S --noconfirm \
-	nano \
-	git \
-	make \
-	coreutils \
-	sed \
-	curl \
-	unzip \
-	tmux \
 	btop \
+	coreutils \
+	curl \
+	git \
+	i3-gaps \
+	make \
+	nano \
 	neofetch \
-	xorg \
-	i3-gaps
+	sed \
+	tmux \
+	unzip \
+	x11vnc \
+	xorg
 
 echo "exec i3" > ~/.xinitrc
 
 # TODO: terminal font picker
 
 sudo pacman -S --noconfirm \
+	cmatrix \
+	cowsay \
+	cryptsetup \
+	docker-compose \
+	docker \
+	feh \
+	fish \
+	kitty \
+	lxsession \
+	picom \
 	polybar \
 	rofi \
-	kitty \
-	feh \
-	picom \
-	ttf-roboto \
-	cryptsetup \
 	thunar \
-	cowsay \
-	lxsession \
-	cmatrix \
-	youtube-dl \
-	fish \
-	docker \
-	docker-compose \
-	ttf-jetbrains-mono
+	ttf-jetbrains-mono \
+	ttf-roboto \
+	youtube-dl
 
 # Fish shell
 
@@ -91,16 +91,6 @@ yay -S --noconfirm \
 	sublime-text-4
 
 # TODO: text editor picker
-
-#wget ${URL_TOUCHPAD}
-
-#sudo mv 30-touchpad.conf /etc/X11/xorg.conf.d/
-
-#sudo virsh net-define /usr/share/libvirt/networks/default.xml
-
-#sudo virsh net-autostart default
-
-#sudo virsh net-start default
 
 # Install `ly` display manager
 
@@ -122,7 +112,13 @@ cd ../../
 
 sudo cp ./fonts/* /usr/share/fonts
 
-# TODO: x11vnc (install, set password, create custom systemctl file, reload daemon, enable service)
+# x11vnc
+
+x11vnc -storepasswd vnc ~/.vnc/passwd
+
+cat ./services/x11vnc.service | sed -r s/jh/${USER}/ > ./build/x11vnc.service
+
+sudo cp ./build/x11vnc.service /etc/systemd/system/x11vnc.service
 
 # Permissions
 
@@ -131,8 +127,10 @@ chmod +x ~/.xinitrc
 
 # Enabling services
 
+sudo systemctl daemon-reload
 sudo systemctl enable ly.service
 sudo systemctl enable docker.service
+sudo systemctl enable x11vnc.service
 
 # Done!
 
