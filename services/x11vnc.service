@@ -1,0 +1,17 @@
+[Unit]
+Description=VNC Server for X11
+Requires=display-manager.service
+After=syslog.target network-online.target
+Wants=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=jh
+Group=jh
+ExecStart=/usr/bin/x11vnc -rfbauth /home/jh/.vnc/passwd -noxdamage -repeat -display :0 -shared -o /home/jh/x11vnc.log
+ExecStop=/usr/bin/x11vnc -R stop
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
